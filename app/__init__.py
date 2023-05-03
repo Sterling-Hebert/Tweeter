@@ -1,9 +1,10 @@
 # !!START
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect
 from .config import Config
 from .tweets import tweets
 from random import choice
 from .forms.form import NewTweetForm
+from datetime import date
 
 app = Flask(__name__)
 
@@ -26,6 +27,23 @@ def feed():
 @app.route('/new', methods=['GET', 'POST'])
 def add_tweet():
     form = NewTweetForm()
+
+    if form.validate_on_submit():
+        new_tweet = {
+            'id': len(tweets) + 1,
+            'author': form.author.data,
+            'date': date.today(),
+            'tweet': form.tweet.data,
+            'likes': 0
+        }
+        print(new_tweet)
+        tweets.append(new_tweet)
+
+        return redirect('/feed')
+    
+    if form.errors:
+        return form.errors
+
     return render_template('new_tweet.html', form=form)
 
 
