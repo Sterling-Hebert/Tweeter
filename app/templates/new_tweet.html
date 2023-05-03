@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Create a new Tweet</h1>
+    <form class="tweet" method="POST" action="/new">
+        {{ form.csrf_token }}
+        <p>
+            {{ form.author.label }} :
+            {{ form.author }}
+        </p>
+        <p>
+            {{ form.tweet.label }} :
+            {{ form.tweet }}
+        </p>
+        <p>
+            {{ form.submit() }}
+        </p>
+    </form>
+{% endblock %}
