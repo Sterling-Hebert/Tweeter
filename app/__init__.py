@@ -15,3 +15,9 @@ def randomTweet():
     tweet = choice(tweets)
     print(tweet)
     return render_template("index.html", tweet=tweet)
+
+@app.route('/feed')
+def feed():
+    # tweets = tweets.query.all()
+    print(tweets)
+    return render_template('feed.html', tweets=tweets)
